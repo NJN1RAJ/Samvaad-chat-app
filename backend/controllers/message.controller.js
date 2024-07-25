@@ -1,5 +1,6 @@
 import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js";
+import { getRecieverSocketId, io } from "../socket/socket.js";
 
 export const sendMessage = async (req, res) => {
   try {
@@ -32,6 +33,12 @@ export const sendMessage = async (req, res) => {
 
     await Promise.all([conversation.save(), newMessage.save()]); // this will run in parallel
 
+    const recieverSocketId = getRecieverSocketId(recieverId);
+    if (recieverSocketId) {
+      //io.to(<socketID>).emit() is used to send events to specific client
+      io.to(recieverSocketId).emit("newMessage", newMessage);
+    }
+
     res.status(201).json(newMessage);
   } catch (error) {
     console.log("Error in send message controller ", error.message);
@@ -41,11 +48,11 @@ export const sendMessage = async (req, res) => {
 
 export const getMessages = async (req, res) => {
   try {
-    const { id: userToChatId } = req.params;
+    const { id: recieverId } = req.params;
     const senderId = req.user._id;
 
     const conversation = await Conversation.findOne({
-      participants: { $all: [senderId, userToChatId] },
+      participants: { $all: [senderId, recieverId] },
     }).populate("messages"); //not reference(ids) but returns the actual messages
 
     if (!conversation) {
