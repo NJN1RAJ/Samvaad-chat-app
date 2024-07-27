@@ -36,7 +36,7 @@ const SignUp = () => {
     <div className="flex flex-col min-w-96 mx-auto justify-center items-center">
       <div className="bg-white w-full h-full p-6 rounded-lg">
         <h1 className="text-3xl ubuntu-medium text-center text-black">
-          Signup <span className="text-blue-500">ChatApp</span>
+          Signup <span className="text-blue-500">Samvaad</span>
         </h1>
         <form onSubmit={onSubmitHandler}>
           <div className="mt-8">

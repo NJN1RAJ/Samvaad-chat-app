@@ -17,7 +17,7 @@ const Login = () => {
     <div className="flex flex-col justify-center items-center min-w-96 mx-auto ">
       <div className="bg-white w-full h-full p-6 rounded-lg">
         <h1 className="text-3xl ubuntu-medium text-center text-black">
-          Login <span className="text-blue-500">ChatApp</span>
+          Login <span className="text-blue-500">Samvaad</span>
         </h1>
 
         <form>
